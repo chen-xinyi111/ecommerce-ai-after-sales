@@ -1,0 +1,56 @@
+[
+  {
+    "order_id": "ORD-100001",
+    "customer_name": "测试用户A",
+    "product_name": "智能手环 S1",
+    "quantity": 1,
+    "amount": 299.0,
+    "status": "delivered",
+    "purchased_at": "2026-08-20"
+  },
+  {
+    "order_id": "ORD-100002",
+    "customer_name": "测试用户B",
+    "product_name": "无线耳机 E2",
+    "quantity": 1,
+    "amount": 459.0,
+    "status": "shipped",
+    "purchased_at": "2026-09-10"
+  },
+  {
+    "order_id": "ORD-100003",
+    "customer_name": "测试用户C",
+    "product_name": "机械键盘 K3",
+    "quantity": 2,
+    "amount": 798.0,
+    "status": "paid",
+    "purchased_at": "2026-09-14"
+  },
+  {
+    "order_id": "ORD-100004",
+    "customer_name": "测试用户D",
+    "product_name": "便携显示器 M4",
+    "quantity": 1,
+    "amount": 1299.0,
+    "status": "cancelled",
+    "purchased_at": "2026-07-03"
+  },
+  {
+    "order_id": "ORD-100005",
+    "customer_name": "测试用户E",
+    "product_name": "人体工学鼠标 G5",
+    "quantity": 1,
+    "amount": 199.0,
+    "status": "refunded",
+    "purchased_at": "2026-06-18"
+  },
+  {
+    "order_id": "ORD-100006",
+    "customer_name": "测试用户F",
+    "product_name": "USB-C 扩展坞 D6",
+    "quantity": 1,
+    "amount": 369.0,
+    "status": "delivered",
+    "purchased_at": "2026-09-01"
+  }
+]

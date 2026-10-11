@@ -1,0 +1,20 @@
+FROM node:24.19.0-bookworm-slim AS frontend
+WORKDIR /frontend
+RUN npm install --global pnpm@11.19.0
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY frontend/ ./
+RUN pnpm run build
+
+FROM python:3.13.14-slim
+WORKDIR /app
+ENV UV_PROJECT_ENVIRONMENT=/usr/local UV_COMPILE_BYTECODE=1 PYTHONPATH=/app/src MODE=production HOST=0.0.0.0
+COPY pyproject.toml uv.lock ./
+RUN pip install --no-cache-dir uv==0.12.5 && uv sync --frozen --no-install-project --no-dev
+COPY src/ ./src/
+COPY scripts/container_start.py ./scripts/container_start.py
+COPY --from=frontend /frontend/dist ./frontend/dist/
+RUN groupadd --gid 10001 commerce && useradd --uid 10001 --gid commerce --no-create-home commerce && chown -R commerce:commerce /app
+USER commerce
+EXPOSE 8080
+CMD ["python", "scripts/container_start.py"]

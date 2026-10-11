@@ -1,0 +1,26 @@
+{
+  "name": "commerce-workstation",
+  "version": "3.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-transform-types --test tests/presentation.test.ts tests/api.test.ts",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vue-tsc --noEmit && vite build --configLoader runner",
+    "types": "openapi-typescript ../docs/api/openapi.json -o src/api/schema.d.ts"
+  },
+  "dependencies": {
+    "vue": "3.5.30",
+    "vue-router": "4.6.4",
+    "pinia": "3.0.4",
+    "element-plus": "2.13.2",
+    "@element-plus/icons-vue": "2.3.2"
+  },
+  "devDependencies": {
+    "vite": "7.3.1",
+    "@vitejs/plugin-vue": "6.0.4",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.2.5",
+    "openapi-typescript": "7.10.1"
+  }
+}

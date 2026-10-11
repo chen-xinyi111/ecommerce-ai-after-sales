@@ -1,0 +1,42 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+privatecredentials/
+**/secrets.toml
+*.pem
+*.key
+*.p12
+*.pfx
+# Generated runtime, databases and attachments
+.runtime/
+**/.runtime/
+.venv/
+venv/
+node_modules/
+dist/
+build/
+__pycache__/
+*.py[cod]
+*.db
+*.db-*
+*.sqlite*
+*.log
+*.pid
+*.eml
+# Local editor and check outputs
+.idea/
+.vscode/
+.claude/
+.codex/
+.agents/
+.pytest_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+*.egg-info/

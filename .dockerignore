@@ -1,0 +1,12 @@
+.git
+.env
+.env.*
+.runtime
+.venv
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+privatecredentials
+tests
+docs/screenshots

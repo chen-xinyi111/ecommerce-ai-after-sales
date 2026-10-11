@@ -1,0 +1,80 @@
+name: qinghe-after-sales
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: commerce
+      POSTGRES_PASSWORD: ${COMMERCE_DB_PASSWORD:?Set COMMERCE_DB_PASSWORD}
+      POSTGRES_DB: agent_commerce_container_demo
+    volumes: [commerce-postgres:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U commerce -d agent_commerce_container_demo']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  redis:
+    image: redis:7.4.9
+    command: [redis-server, --save, '', --appendonly, 'no']
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  kafka:
+    image: apache/kafka:3.9.1
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_NUM_PARTITIONS: 4
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    volumes: [commerce-kafka:/var/lib/kafka/data]
+    healthcheck:
+      test: [CMD, /opt/kafka/bin/kafka-topics.sh, --bootstrap-server, kafka:9092, --list]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+  agent_service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.commerce
+    ports: ['127.0.0.1:${COMMERCE_HTTP_PORT:-18080}:8080']
+    environment:
+      COMMERCE_ENABLED: 'true'
+      AUTH_SECRET: ${COMMERCE_AUTH_SECRET:?Set COMMERCE_AUTH_SECRET}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: commerce
+      POSTGRES_PASSWORD: ${COMMERCE_DB_PASSWORD:?Set COMMERCE_DB_PASSWORD}
+      POSTGRES_DB: agent_commerce_container_demo
+      DATABASE_TYPE: postgres
+      USE_FAKE_MODEL: ${USE_FAKE_MODEL:-true}
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-fake}
+      DASHSCOPE_APIKEY: ${DASHSCOPE_APIKEY:-}
+      ASYNC_TRANSPORT: kafka
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC: commerce.container.tasks.v1
+      KAFKA_GROUP: commerce-container-workers-v1
+      REDIS_URL: redis://redis:6379/0
+      BUSINESS_ORIGINS: http://127.0.0.1:${COMMERCE_HTTP_PORT:-18080},http://localhost:${COMMERCE_HTTP_PORT:-18080}
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      kafka: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/v1/health', timeout=5)"]
+      interval: 10s
+      timeout: 8s
+      retries: 20
+      start_period: 120s
+volumes:
+  commerce-postgres:
+  commerce-kafka:

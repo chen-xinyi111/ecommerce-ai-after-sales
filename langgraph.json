@@ -1,0 +1,9 @@
+{
+    "python_version": "3.12",
+    "dependencies": ["./src"],
+    "graphs": {
+        "research_assistant": "./src/agents/research_assistant.py:research_assistant",
+        "after_sales_agent": "./src/agents/after_sales/agent.py:after_sales_agent"
+    },
+    "env": "./.env"
+}

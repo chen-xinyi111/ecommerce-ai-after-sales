@@ -1,0 +1,34 @@
+{
+  "kind": "repair",
+  "version": "1.0.0",
+  "required_fields": [
+    "kind",
+    "order_item_id",
+    "quantity",
+    "reason",
+    "received"
+  ],
+  "allowed_tools": [
+    "query_order",
+    "query_logistics",
+    "query_inventory",
+    "query_policy",
+    "query_after_sales_history",
+    "preview_after_sales"
+  ],
+  "policy_id": "POL-REPAIR",
+  "window_days": 365,
+  "next_step": "预览完成后等待后续用户确认与客服审批功能开放。",
+  "examples": [
+    {
+      "request": {
+        "kind": "repair",
+        "order_item_id": "ORD-200001-I1",
+        "quantity": 1,
+        "reason": "quality",
+        "received": true
+      },
+      "note": "字段提取示例；资格必须以当前数据库校验结果为准。"
+    }
+  ]
+}

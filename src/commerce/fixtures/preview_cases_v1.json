@@ -1,0 +1,962 @@
+[
+  {
+    "id": "refund-01",
+    "title": "退款 · 正常资格",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "refund-02",
+    "title": "退款 · 购买94天的期限判断",
+    "category": "expired",
+    "actor_username": "user002",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "within_window"
+  },
+  {
+    "id": "refund-03",
+    "title": "退款 · 库存为零",
+    "category": "out_of_stock",
+    "actor_username": "user003",
+    "order_id": "ORD-200003",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200003-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "refund-04",
+    "title": "退款 · 部分退款后剩余1件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "refund-05",
+    "title": "退款 · 部分退款后申请2件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "refund-06",
+    "title": "退款 · 历史售后后剩余1件",
+    "category": "history",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "refund-07",
+    "title": "退款 · 重复申请历史已办理数量",
+    "category": "duplicate",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "refund-08",
+    "title": "退款 · 超过购买数量",
+    "category": "quantity",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 3,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "refund-09",
+    "title": "退款 · 未提供数量",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": null,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "quantity"
+  },
+  {
+    "id": "refund-10",
+    "title": "退款 · 未选择商品",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": null,
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "order_item_id"
+  },
+  {
+    "id": "refund-11",
+    "title": "退款 · 未说明收货状态",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": null
+    },
+    "expected_status": "needs_info",
+    "expected_code": "received"
+  },
+  {
+    "id": "refund-12",
+    "title": "退款 · 原因和收货状态冲突",
+    "category": "conflict",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "receipt_consistent"
+  },
+  {
+    "id": "refund-13",
+    "title": "退款 · 收货状态冲突",
+    "category": "conflict",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "receipt_consistent"
+  },
+  {
+    "id": "refund-14",
+    "title": "退款 · 订单已取消",
+    "category": "cancelled",
+    "actor_username": "user019",
+    "order_id": "ORD-200019",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200019-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "order_status"
+  },
+  {
+    "id": "refund-15",
+    "title": "退款 · 用户001访问他人订单",
+    "category": "identity_mismatch",
+    "actor_username": "user001",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "not_found",
+    "expected_code": null
+  },
+  {
+    "id": "exchange-01",
+    "title": "换货 · 正常资格",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "exchange-02",
+    "title": "换货 · 购买94天的期限判断",
+    "category": "expired",
+    "actor_username": "user002",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "within_window"
+  },
+  {
+    "id": "exchange-03",
+    "title": "换货 · 库存为零",
+    "category": "out_of_stock",
+    "actor_username": "user003",
+    "order_id": "ORD-200003",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200003-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "stock_available"
+  },
+  {
+    "id": "exchange-04",
+    "title": "换货 · 部分退款后剩余1件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "exchange-05",
+    "title": "换货 · 部分退款后申请2件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "exchange-06",
+    "title": "换货 · 历史售后后剩余1件",
+    "category": "history",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "exchange-07",
+    "title": "换货 · 重复申请历史已办理数量",
+    "category": "duplicate",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "exchange-08",
+    "title": "换货 · 超过购买数量",
+    "category": "quantity",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 3,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "exchange-09",
+    "title": "换货 · 未提供数量",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": null,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "quantity"
+  },
+  {
+    "id": "exchange-10",
+    "title": "换货 · 未选择商品",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": null,
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "order_item_id"
+  },
+  {
+    "id": "exchange-11",
+    "title": "换货 · 未说明收货状态",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": null
+    },
+    "expected_status": "needs_info",
+    "expected_code": "received"
+  },
+  {
+    "id": "exchange-12",
+    "title": "换货 · 不支持的原因",
+    "category": "reason",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "changed_mind",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "reason_allowed"
+  },
+  {
+    "id": "exchange-13",
+    "title": "换货 · 收货状态冲突",
+    "category": "conflict",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "receipt_consistent"
+  },
+  {
+    "id": "exchange-14",
+    "title": "换货 · 订单已取消",
+    "category": "cancelled",
+    "actor_username": "user019",
+    "order_id": "ORD-200019",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200019-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "order_status"
+  },
+  {
+    "id": "exchange-15",
+    "title": "换货 · 用户001访问他人订单",
+    "category": "identity_mismatch",
+    "actor_username": "user001",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "not_found",
+    "expected_code": null
+  },
+  {
+    "id": "reship-01",
+    "title": "补发 · 正常资格",
+    "category": "normal",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "reship-02",
+    "title": "补发 · 购买94天的期限判断",
+    "category": "expired",
+    "actor_username": "user002",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "within_window"
+  },
+  {
+    "id": "reship-03",
+    "title": "补发 · 库存为零",
+    "category": "out_of_stock",
+    "actor_username": "user010",
+    "order_id": "ORD-200010",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200010-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "stock_available"
+  },
+  {
+    "id": "reship-04",
+    "title": "补发 · 部分退款后剩余1件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "shipment_lost"
+  },
+  {
+    "id": "reship-05",
+    "title": "补发 · 部分退款后申请2件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 2,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "reship-06",
+    "title": "补发 · 历史售后后剩余1件",
+    "category": "history",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "shipment_lost"
+  },
+  {
+    "id": "reship-07",
+    "title": "补发 · 重复申请历史已办理数量",
+    "category": "duplicate",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 2,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "reship-08",
+    "title": "补发 · 超过购买数量",
+    "category": "quantity",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 3,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "reship-09",
+    "title": "补发 · 未提供数量",
+    "category": "missing",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": null,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "needs_info",
+    "expected_code": "quantity"
+  },
+  {
+    "id": "reship-10",
+    "title": "补发 · 未选择商品",
+    "category": "missing",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": null,
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "needs_info",
+    "expected_code": "order_item_id"
+  },
+  {
+    "id": "reship-11",
+    "title": "补发 · 未说明收货状态",
+    "category": "missing",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": null
+    },
+    "expected_status": "needs_info",
+    "expected_code": "received"
+  },
+  {
+    "id": "reship-12",
+    "title": "补发 · 不支持的原因",
+    "category": "reason",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 1,
+      "reason": "changed_mind",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "reason_allowed"
+  },
+  {
+    "id": "reship-13",
+    "title": "补发 · 收货状态冲突",
+    "category": "conflict",
+    "actor_username": "user004",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "receipt_consistent"
+  },
+  {
+    "id": "reship-14",
+    "title": "补发 · 订单已取消",
+    "category": "cancelled",
+    "actor_username": "user019",
+    "order_id": "ORD-200019",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200019-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "order_status"
+  },
+  {
+    "id": "reship-15",
+    "title": "补发 · 用户001访问他人订单",
+    "category": "identity_mismatch",
+    "actor_username": "user001",
+    "order_id": "ORD-200004",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-200004-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "not_found",
+    "expected_code": null
+  },
+  {
+    "id": "repair-01",
+    "title": "维修 · 正常资格",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "repair-02",
+    "title": "维修 · 购买94天的期限判断",
+    "category": "expired",
+    "actor_username": "user002",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "repair-03",
+    "title": "维修 · 库存为零",
+    "category": "out_of_stock",
+    "actor_username": "user003",
+    "order_id": "ORD-200003",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200003-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "repair-04",
+    "title": "维修 · 部分退款后剩余1件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "repair-05",
+    "title": "维修 · 部分退款后申请2件",
+    "category": "partial_refund",
+    "actor_username": "user005",
+    "order_id": "ORD-200005",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200005-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "repair-06",
+    "title": "维修 · 历史售后后剩余1件",
+    "category": "history",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "repair-07",
+    "title": "维修 · 重复申请历史已办理数量",
+    "category": "duplicate",
+    "actor_username": "user006",
+    "order_id": "ORD-200006",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200006-I1",
+      "quantity": 2,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "repair-08",
+    "title": "维修 · 超过购买数量",
+    "category": "quantity",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 3,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "quantity_available"
+  },
+  {
+    "id": "repair-09",
+    "title": "维修 · 未提供数量",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": null,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "quantity"
+  },
+  {
+    "id": "repair-10",
+    "title": "维修 · 未选择商品",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": null,
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "needs_info",
+    "expected_code": "order_item_id"
+  },
+  {
+    "id": "repair-11",
+    "title": "维修 · 未说明收货状态",
+    "category": "missing",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": null
+    },
+    "expected_status": "needs_info",
+    "expected_code": "received"
+  },
+  {
+    "id": "repair-12",
+    "title": "维修 · 不支持的原因",
+    "category": "reason",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "wrong_item",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "reason_allowed"
+  },
+  {
+    "id": "repair-13",
+    "title": "维修 · 收货状态冲突",
+    "category": "conflict",
+    "actor_username": "user001",
+    "order_id": "ORD-200001",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": false
+    },
+    "expected_status": "ineligible",
+    "expected_code": "receipt_consistent"
+  },
+  {
+    "id": "repair-14",
+    "title": "维修 · 订单已取消",
+    "category": "cancelled",
+    "actor_username": "user019",
+    "order_id": "ORD-200019",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200019-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "order_status"
+  },
+  {
+    "id": "repair-15",
+    "title": "维修 · 用户001访问他人订单",
+    "category": "identity_mismatch",
+    "actor_username": "user001",
+    "order_id": "ORD-200002",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-200002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "not_found",
+    "expected_code": null
+  }
+]

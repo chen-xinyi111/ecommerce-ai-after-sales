@@ -1,0 +1,82 @@
+[
+  {
+    "id": "acceptance33-01",
+    "title": "3.3 验收 · 退款",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-960001",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-960001-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "acceptance33-02",
+    "title": "3.3 验收 · 换货",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-960002",
+    "input": {
+      "kind": "exchange",
+      "order_item_id": "ORD-960002-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "acceptance33-03",
+    "title": "3.3 验收 · 补发",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-960003",
+    "input": {
+      "kind": "reship",
+      "order_item_id": "ORD-960003-I1",
+      "quantity": 1,
+      "reason": "not_received",
+      "received": false
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "acceptance33-04",
+    "title": "3.3 验收 · 维修",
+    "category": "normal",
+    "actor_username": "user001",
+    "order_id": "ORD-960004",
+    "input": {
+      "kind": "repair",
+      "order_item_id": "ORD-960004-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "eligible",
+    "expected_code": null
+  },
+  {
+    "id": "acceptance33-05",
+    "title": "3.3 验收 · 退款超期异常",
+    "category": "expired",
+    "actor_username": "user001",
+    "order_id": "ORD-960005",
+    "input": {
+      "kind": "refund",
+      "order_item_id": "ORD-960005-I1",
+      "quantity": 1,
+      "reason": "quality",
+      "received": true
+    },
+    "expected_status": "ineligible",
+    "expected_code": "within_window"
+  }
+]

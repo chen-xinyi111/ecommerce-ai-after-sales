@@ -1,0 +1,6 @@
+minimumReleaseAge: 20160
+storeDir: ../.runtime/cache/pnpm
+verifyDepsBeforeRun: false
+allowBuilds:
+  esbuild: true
+  vue-demi: true

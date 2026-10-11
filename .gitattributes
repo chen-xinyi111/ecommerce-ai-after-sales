@@ -1,0 +1,6 @@
+# Applied SQL migrations use byte checksums. Preserve their established line endings.
+src/commerce/migrations/*.sql text eol=lf
+src/commerce/migrations/002_consistency_guard.sql text eol=crlf
+src/agents/after_sales/skills/** text eol=lf
+/docs/deliveries/3.2/** -text
+/docs/deliveries/3.3/** -text
