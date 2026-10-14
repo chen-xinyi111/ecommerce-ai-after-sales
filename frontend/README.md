@@ -1,4 +1,4 @@
-# 青禾售后服务台前端
+# 电商智能售后服务台前端
 
 Vue 3、TypeScript、Pinia、Vue Router 和 Element Plus。
 

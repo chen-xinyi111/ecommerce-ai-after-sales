@@ -83,7 +83,7 @@ async def send_account_mail(email, purpose, token):
     message = EmailMessage()
     message["From"] = config.SMTP_FROM
     message["To"] = email
-    message["Subject"] = "青禾：验证邮箱" if mode == "verify" else "青禾：重置密码"
+    message["Subject"] = "电商智能售后服务台：验证邮箱" if mode == "verify" else "电商智能售后服务台：重置密码"
     message.set_content(
         f"请打开以下链接完成操作。链接有效期为 30 分钟，仅可使用一次。\n{link}\n如果不是本人操作，请忽略。"
     )
@@ -377,7 +377,7 @@ async def close_support(thread_id: UUID, actor: Actor):
         ).fetchone()
         if not row:
             raise HTTPException(409, "请由接单客服结束咨询")
-    return {"message": "人工服务已结束，可以继续使用售后助手"}
+    return {"message": "人工服务已结束，可以继续使用智能售后助手"}
 
 
 class SupportMessage(Input):

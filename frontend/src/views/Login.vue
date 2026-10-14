@@ -53,9 +53,9 @@ async function login() {
 <template>
   <main class="login-page">
     <section class="login-story">
-      <div class="brand"><span class="brand-mark">禾</span><span>青禾<span class="brand-sub">售后服务台</span></span></div>
+      <div class="brand"><span class="brand-mark">售</span><span>智能售后<span class="brand-sub">电商服务台</span></span></div>
       <div class="story-body"><div class="eyebrow light">每一份信任，都有回应</div><h1>让售后咨询<br>简单、清晰、安心。</h1><p>从一笔订单开始，了解商品、支付与物流。<br>让每一次沟通，都有可追溯的记录。</p><div class="story-lines"><span>01　核验订单</span><span>02　沟通问题</span><span>03　保留记录</span></div></div>
-      <p class="story-foot">青禾售后服务台</p>
+      <p class="story-foot">电商智能售后服务台</p>
     </section>
     <section class="login-form-area"><form class="login-card" @submit.prevent="login">
       <h2>{{ title }}</h2><p class="muted">{{ mode === 'register' ? '设置账号和密码，注册后即可登录' : mode === 'forgot' ? '请联系本机服务台管理员重置密码。登录后也可在账号设置中修改密码。' : '查看订单，办理售后' }}</p>

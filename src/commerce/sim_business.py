@@ -24,7 +24,7 @@ async def internal_auth(request: Request):
         raise HTTPException(403, "业务接口认证失败")
 
 
-app = FastAPI(title="青禾独立模拟业务接口", dependencies=[Depends(internal_auth)])
+app = FastAPI(title="电商智能售后服务台 · 模拟业务接口", dependencies=[Depends(internal_auth)])
 
 
 async def actor(actor_id: str):

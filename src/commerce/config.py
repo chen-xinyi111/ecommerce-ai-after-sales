@@ -36,7 +36,7 @@ class CommerceSettings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ''
     SMTP_PASSWORD: SecretStr = SecretStr('')
-    SMTP_FROM: str = 'service@qinghe.local'
+    SMTP_FROM: str = 'service@after-sales.local'
 
     def connection_kwargs(self) -> dict:
         return {

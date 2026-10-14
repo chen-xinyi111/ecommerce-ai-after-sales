@@ -1,6 +1,6 @@
-# 青禾 · AI 电商售后服务台
+# 电商智能售后服务台
 
-青禾是一套面向用户与客服的电商售后应用，将订单查询、AI 咨询、售后申请、人工审批与业务办理串联在同一个工作台中。支持 **退款、换货、补发、维修** 四类售后场景，用户可以查看申请进度，客服可以核对材料、处理审批和跟踪办理结果。
+本项目是一套面向用户与客服的电商售后应用，将订单查询、AI 咨询、售后申请、人工审批与业务办理串联在同一个工作台中。支持 **退款、换货、补发、维修** 四类售后场景，用户可以查看申请进度，客服可以核对材料、处理审批和跟踪办理结果。
 
 **核心流程：** 查询订单 → 生成售后方案 → 用户确认 → 客服审批 → 提交业务执行 → 查看办理结果。
 
@@ -24,7 +24,7 @@
 
 下图展示主要业务路径，以及补充材料、方案失效和办理异常时的处理分支。
 
-![青禾电商售后项目流程图](figures/after-sales-workflow.png)
+![电商智能售后服务台项目流程图](figures/after-sales-workflow.png)
 
 **流程中的关键约束：**
 
@@ -91,13 +91,13 @@
 安装并启动 Docker Desktop 后，在 PowerShell 执行：
 
 ```powershell
-git clone https://github.com/chen-xinyi111/qinghe-after-sales.git
-cd qinghe-after-sales
+git clone https://github.com/chen-xinyi111/ecommerce-ai-after-sales.git
+cd ecommerce-ai-after-sales
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 .\scripts\local\Docker.ps1 -Action Start
 ```
 
-执行策略设置仅对当前 PowerShell 进程及其子进程有效。首次运行会构建应用并生成本机配置，启动后打开 [青禾工作台](http://127.0.0.1:18080/app/)。
+执行策略设置仅对当前 PowerShell 进程及其子进程有效。首次运行会构建应用并生成本机配置，启动后打开 [智能售后工作台](http://127.0.0.1:18080/app/)。
 
 默认使用离线模拟模型，无需 API Key。演示用户为 `user001`，演示客服为 `staff001`，公共模拟密码为 `Demo-1101!`。这些账号用于模拟数据体验。
 
